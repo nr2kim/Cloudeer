@@ -1,0 +1,5 @@
+apply plugin: 'dropbox'
+dependencies {
+    // ...
+    compile 'com.dropbox.core:dropbox-core-sdk:3.0.7'
+}
