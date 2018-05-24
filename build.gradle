@@ -1,5 +1,35 @@
-apply plugin: 'dropbox'
+apply plugin: 'java'
 dependencies {
-    // ...
     compile 'com.dropbox.core:dropbox-core-sdk:3.0.7'
+}
+compileJava {
+    options.compilerArgs << '-Xlint:all'
+    options.warnings = true
+    options.deprecation = true
+    options.encoding = 'utf-8'
+}
+
+task run(type: JavaExec) {
+    standardInput = System.in
+    classpath = sourceSets.runtimeClasspath
+    main = "myexample.main"
+    // convenience for not having to always specify the auth file
+    def useAuthInfoFileProp = project.properties.get('useAuthInfoFileProp', 'false') == 'true'
+    if (useAuthInfoFileProp && project.hasProperty('com.dropbox.test.authInfoFile')) {
+        args project.property('com.dropbox.test.authInfoFile')
+    }
+
+    def failOnError = project.properties.get('failOnError', 'false') == 'true'
+    ignoreExitValue !failOnError
+
+    def argi = 0
+    while (true) {
+        def prop = "arg${argi}"
+        if (project.hasProperty(prop)) {
+            args project.property(prop)
+        } else {
+            break
+        }
+        ++argi
+    }
 }
