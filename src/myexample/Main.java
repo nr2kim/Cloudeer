@@ -1,13 +1,9 @@
 /**
  * Example from https://github.com/dropbox/dropbox-sdk-java
  */
-package myexample.main;
-import com.dropbox.core.DbxDownloader;
+package myexample;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.callbacks.DbxGlobalCallbackFactory;
-import com.dropbox.core.v2.callbacks.DbxRouteErrorCallback;
-import com.dropbox.core.v2.callbacks.DbxNetworkErrorCallback;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.ListFolderResult;
@@ -17,16 +13,15 @@ import com.dropbox.core.v2.users.FullAccount;
 import java.util.List;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
 public class Main {
-    private static final String ACCESS_TOKEN = "<ACCESS TOKEN>";
+    private static final String ACCESS_TOKEN = "RGaKeZOu4WAAAAAAAAAbmTZAm_ooJGpWtPUwJqM7RjvlrYMzvIrxjwrEfEgXAuby";
 
     public static void main(String args[]) throws DbxException, IOException {
         // Create Dropbox client
-        DbxRequestConfig config = new DbxRequestConfig("dropbox/java-tutorial");
+        DbxRequestConfig config = new DbxRequestConfig("example", "en_US");
         DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 
         // Get current account info
@@ -51,15 +46,6 @@ public class Main {
         try (InputStream in = new FileInputStream("test.txt")) {
             FileMetadata metadata = client.files().uploadBuilder("/test.txt")
                 .uploadAndFinish(in);
-        }
-
-        DbxDownloader<FileMetadata> downloader = client.files().download("/test.txt");
-        try {
-            FileOutputStream out = new FileOutputStream("test.txt");
-            downloader.download(out);
-            out.close();
-        } catch (DbxException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 }
