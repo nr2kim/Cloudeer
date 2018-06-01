@@ -1,7 +1,7 @@
 /**
  * Example from https://github.com/dropbox/dropbox-sdk-java
  */
-package myexample;
+package accessDropbox;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
@@ -16,7 +16,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class Main {
+public class accessDropbox {
     private static final String ACCESS_TOKEN = "RGaKeZOu4WAAAAAAAAAbmTZAm_ooJGpWtPUwJqM7RjvlrYMzvIrxjwrEfEgXAuby";
 
     public static void main(String args[]) throws DbxException, IOException {
