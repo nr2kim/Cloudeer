@@ -1,42 +1,74 @@
 package login;
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
 public class loginUI extends JFrame {
 	//private variables
-	private JButton loginButton = new JButton("Login to Dropbox");
-	
+	private JPanel loginPanel;
+	private JButton connectToDbx;
+	private JButton connectToGgl;
+	private JButton connectToOneD;
+	private JPanel copyRightPanel;
+	public Dimension fullLoginScreenSize;
 	// Constructor to setup the GUI components
 	public loginUI() {
 		super("Log In");
 		System.out.println("Working Directory = " + System.getProperty("user.dir"));
-		JPanel mainPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(10,10,10,10);
-		mainPanel.add(loginButton, constraints);
-		mainPanel.setBackground(Color.WHITE);
-		mainPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Login Panel"));
-//		mainPanel.add(logo, constraints);
-		add(mainPanel);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		fullLoginScreenSize = new Dimension(screenSize.width/2, screenSize.height/2);
+		loginPanel = new JPanel(new GridBagLayout());
+		connectToDbx = new JButton("Login to Dropbox");
+		connectToGgl = new JButton("Login to Google Drive");
+		connectToOneD = new JButton("Login to One Drive");
+		copyRightPanel = new JPanel(new GridBagLayout());
 		pack();
+		setSize(fullLoginScreenSize.width, fullLoginScreenSize.height);
 		setLocationRelativeTo(null);
+		// maybe work only for windows?
+		setIconImage(Toolkit.getDefaultToolkit().getImage("../img/Cloudeer.png"));
+		// put this for now, later, put it as JFrame.HIDE_ON_CLOSE
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setUpConnectButtons();
+		setUpCopyRightPanel();
+		
+		add(loginPanel);
+		add(copyRightPanel);
+		
 	}
 	
 	//methods
-	protected ImageIcon createImageIcon(String path, String description) {
-		java.net.URL imgURL = getClass().getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL, description);
-		} else {
-			System.err.println("Couldn't find file: " + path);
-			return null;
-		}
+	public void setUpConnectButtons() {
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.EAST;
+		constraints.insets = new Insets(100,50,100,50);
+		
+		connectToDbx.setName("DbxSignInButton");
+		connectToGgl.setName("GglSignInButton");
+		connectToOneD.setName("OneDSignInButton");
+		connectToDbx.addMouseListener(new connectButtonMouseAdapter(connectToDbx));
+		connectToGgl.addMouseListener(new connectButtonMouseAdapter(connectToGgl));
+		connectToOneD.addMouseListener(new connectButtonMouseAdapter(connectToOneD));
+		
+		// TODO:: SETUP IMAGES
+		loginPanel.add(connectToDbx, constraints);
+		loginPanel.add(connectToGgl, constraints);
+		loginPanel.add(connectToOneD, constraints);
+		
+		loginPanel.setBackground(Color.WHITE);
+		
+		loginPanel.setSize(fullLoginScreenSize.width, fullLoginScreenSize.height * 9 / 10);
+	}
+	
+	public void setUpCopyRightPanel() {
+		copyRightPanel.setBackground(Color.LIGHT_GRAY);
+		copyRightPanel.setSize(fullLoginScreenSize.height/9, fullLoginScreenSize.height/9);
+		
 	}
 	public static void main(String[] args) {
 		// set look and feel to the system look and feel
