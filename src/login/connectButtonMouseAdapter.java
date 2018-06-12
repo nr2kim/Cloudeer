@@ -33,6 +33,7 @@ public class connectButtonMouseAdapter extends MouseAdapter {
 
         if (pressed) {
             if (SwingUtilities.isLeftMouseButton(e)) {
+            	thisButton.setText("F");
             	try {
 					signInFrameSetup();
 				} catch (FileLoadException e1) {

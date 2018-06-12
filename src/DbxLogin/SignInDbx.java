@@ -19,8 +19,6 @@ import com.dropbox.core.v2.files.Metadata;
 import com.dropbox.core.v2.files.UploadErrorException;
 import com.dropbox.core.v2.users.FullAccount;
 
-import login.DbxConnectButtonMouseAdapter;
-
 import javax.swing.*;
 
 import java.awt.Button;
@@ -36,6 +34,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class SignInDbx extends JFrame {
 	private static JPanel dbxPanel;
@@ -50,15 +51,14 @@ public class SignInDbx extends JFrame {
 		dbxPanel = new JPanel(new GridBagLayout());
 		accessTokenCommit = new JButton("Connect");
 		accessTokenInput = new JTextField("Enter the authorization code here...");
+		accessTokenInput.setSize(50*accessTokenInput.getFont().getSize(), accessTokenInput.getFont().getSize());
 		accessInfo = new JTextArea();
-		
 		accessInfo.setEditable(false);
 		accessInfo.setOpaque(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		accessTokenCommit.addMouseListener(new DbxConnectButtonMouseAdapter(accessTokenInput, accessTokenCommit, webAuth, appInfo));
 		getAccessTokenSetUp();
 		add(dbxPanel);
+		
 		pack();
 		setLocationRelativeTo(null);
 	}
@@ -73,8 +73,18 @@ public class SignInDbx extends JFrame {
             .build();
 
         String authorizeUrl = webAuth.authorize(webAuthRequest);
+        if (Desktop.isDesktopSupported()) {
+            try {
+				Desktop.getDesktop().browse(new URI(authorizeUrl));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+
         accessInfo.setText("1. Go to " + authorizeUrl + "\n 2. Click \"Allow\" (you might have to log in first)."
         		+ "3. Copy the authorization code.");
+		accessTokenCommit.addMouseListener(new DbxConnectButtonMouseAdapter(accessTokenInput, accessTokenCommit, webAuth, appInfo));
 
         GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;

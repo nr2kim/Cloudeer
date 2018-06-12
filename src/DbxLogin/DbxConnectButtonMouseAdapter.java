@@ -1,4 +1,4 @@
-package login;
+package DbxLogin;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,8 +16,8 @@ import com.dropbox.core.DbxAuthInfo;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.json.JsonReader.FileLoadException;
-
-import DbxLogin.SignInDbx;
+import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.v2.DbxClientV2;
 
 public class DbxConnectButtonMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
@@ -71,7 +71,6 @@ public class DbxConnectButtonMouseAdapter extends MouseAdapter {
     
     public static void finishDbxAuth() throws IOException {
 		String token = new String(tokenInfo.getText());
-		System.out.println(token);
         DbxAuthFinish authFinish;
         try {
             authFinish = webAuth.finishFromCode(token);
