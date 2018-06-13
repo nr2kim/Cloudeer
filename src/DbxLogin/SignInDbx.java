@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -51,7 +52,7 @@ public class SignInDbx extends JFrame {
 		dbxPanel = new JPanel(new GridBagLayout());
 		accessTokenCommit = new JButton("Connect");
 		accessTokenInput = new JTextField("Enter the authorization code here...");
-		accessTokenInput.setSize(50*accessTokenInput.getFont().getSize(), accessTokenInput.getFont().getSize());
+		accessTokenInput.setPreferredSize(new Dimension(50*accessTokenInput.getFont().getSize(), accessTokenInput.getFont().getSize()*2));
 		accessInfo = new JTextArea();
 		accessInfo.setEditable(false);
 		accessInfo.setOpaque(false);
@@ -82,15 +83,19 @@ public class SignInDbx extends JFrame {
 			}
         }
 
-        accessInfo.setText("1. Go to " + authorizeUrl + "\n 2. Click \"Allow\" (you might have to log in first)."
-        		+ "3. Copy the authorization code.");
+        accessInfo.setText("1. Go to " + authorizeUrl + "\n2. Click \"Allow\" (you might have to log in first)."
+        		+ "\n3. Copy the authorization code.");
 		accessTokenCommit.addMouseListener(new DbxConnectButtonMouseAdapter(accessTokenInput, accessTokenCommit, webAuth, appInfo));
 
         GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
-		constraints.insets = new Insets(100,100,100,100);
+		constraints.insets = new Insets(40, 40, 20, 40);
 		dbxPanel.add(accessInfo, constraints);
+		constraints.insets = new Insets(20, 40, 20, 40);
+		constraints.gridy = 30;
         dbxPanel.add(accessTokenInput, constraints);
+        constraints.gridy = 60;
+		constraints.insets = new Insets(20, 40, 40, 40);
         dbxPanel.add(accessTokenCommit, constraints);
 	}
 }
