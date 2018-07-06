@@ -2,6 +2,7 @@
  * Example from https://github.com/dropbox/dropbox-sdk-java
  */
 package DbxLogin;
+
 import com.dropbox.core.DbxApiException;
 import com.dropbox.core.DbxAppInfo;
 import com.dropbox.core.DbxAuthFinish;
@@ -21,6 +22,10 @@ import com.dropbox.core.v2.users.FullAccount;
 
 import javax.swing.*;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.awt.Button;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -31,8 +36,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.IOException;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -46,6 +53,7 @@ public class SignInDbx extends JFrame {
 	private static JTextArea accessInfo;
 	private static DbxWebAuth webAuth;
 	private static DbxAppInfo appInfo;
+	private static DbxRequestConfig config;
 	
 	public SignInDbx() throws FileLoadException {
 		super("Log In to Dropbox");
@@ -65,9 +73,27 @@ public class SignInDbx extends JFrame {
 	}
 
 	public static void getAccessTokenSetUp() throws FileLoadException {
+		JSONParser parser = new JSONParser();
+		Object parsedConfig = null;
+		Object parsedAppInfo = null;
+		try {
+			parsedConfig = parser.parse(new FileReader("./src/dbx.cloudeer.config"));
+			parsedAppInfo = parser.parse(new FileReader("./src/auth.env"));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		JSONObject dbxConfigJson = (JSONObject) parsedConfig;
+		JSONObject dbxAppInfoJson = (JSONObject) parsedAppInfo;
 		// DbxRequestConfig(String clientIdentifier) : clientIdentifier = "Name/Version"
-		DbxRequestConfig config = new DbxRequestConfig("Cloudeer/1.0.0", "en-CA");
-		appInfo = DbxAppInfo.Reader.readFromFile("src/login/auth.env");
+		config = new DbxRequestConfig((String) dbxConfigJson.get("clientIdentifier"), (String) dbxConfigJson.get("userLocale"));
+		appInfo = new DbxAppInfo((String) dbxAppInfoJson.get("key"), (String) dbxAppInfoJson.get("secret"));
         webAuth = new DbxWebAuth(config, appInfo);
         DbxWebAuth.Request webAuthRequest = DbxWebAuth.newRequestBuilder()
             .withNoRedirect()

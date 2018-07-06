@@ -86,7 +86,7 @@ public class DbxConnectButtonMouseAdapter extends MouseAdapter {
 
         // Save auth information to output file.
         DbxAuthInfo authInfo = new DbxAuthInfo(authFinish.getAccessToken(), appInfo.getHost());
-        File output = new File("./auth_output.txt");
+        File output = new File("./out/auth_output.txt");
         try {
             DbxAuthInfo.Writer.writeToFile(authInfo, output);
             System.out.println("Saved authorization information to \"" + output.getCanonicalPath() + "\".");
