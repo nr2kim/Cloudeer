@@ -19,36 +19,49 @@ public class login extends JPanel {
 	private JButton connectToOneD;
 	private JPanel copyRightPanel;
 	public Dimension fullLoginScreenSize;
+	private Dimension tabSize;
+	private int numTabs;
 	// Constructor to setup the GUI components
 	public login() {
 		super(new GridLayout(1,1));
-		
-		cloudTabbedPane = new JTabbedPane();
-
-		cloudTabbedPane.setAutoscrolls(true);
-		
+		numTabs = 4;
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		fullLoginScreenSize = new Dimension(screenSize.width/2, screenSize.height/2);
+		tabSize = new Dimension((fullLoginScreenSize.height-10)/numTabs, 50);
+		cloudTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+			    
 		JComponent allPane = makeTextPanel("All panel");
-		ImageIcon allPaneIcon = createImageIcon("./img/Cloudeer.png");
-		cloudTabbedPane.addTab("All", allPane);
+		ImageIcon allPaneIcon = createImageIcon("./img/Cloudeer.png", tabSize);
+		cloudTabbedPane.addTab("", allPane);
+	    JLabel allPaneTitle = new JLabel("All");    // create a label
+	    allPaneTitle.setPreferredSize(tabSize);
+		cloudTabbedPane.setTabComponentAt(0, allPaneTitle);
 		cloudTabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-
+		
 		JComponent dbxPane = makeTextPanel("Dropbox panel");
-		ImageIcon dbxPaneIcon = createImageIcon("img/600DropboxIconWithName.png");
-		cloudTabbedPane.addTab("", dbxPaneIcon, dbxPane);
-		cloudTabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
+		ImageIcon dbxPaneIcon = createImageIcon("img/600DropboxIconWithName.png", tabSize);
+		cloudTabbedPane.addTab("", dbxPane);
+		JLabel dbxPaneTitle = new JLabel();
+		dbxPaneTitle.setIcon(dbxPaneIcon);
+		dbxPaneTitle.setPreferredSize(tabSize);
+		cloudTabbedPane.setTabComponentAt(1, dbxPaneTitle);
+		cloudTabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 		
 		JComponent gglPane = makeTextPanel("Google panel");
-		ImageIcon gglPaneIcon = createImageIcon("img/600GoogleDriveIconWithName.png");
+		ImageIcon gglPaneIcon = createImageIcon("img/600GoogleDriveIconWithName.png", tabSize);
 		cloudTabbedPane.addTab("", gglPaneIcon, gglPane);
-		cloudTabbedPane.setMnemonicAt(0, KeyEvent.VK_3);
+		cloudTabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
 		
 		JComponent OneDrivePane = makeTextPanel("One Drive panel");
-		ImageIcon OneDrivePaneIcon = createImageIcon("img/600OneDriveWithName.png");
+		ImageIcon OneDrivePaneIcon = createImageIcon("img/600OneDriveWithName.png", tabSize);
 		cloudTabbedPane.addTab("", OneDrivePaneIcon, OneDrivePane);
-		cloudTabbedPane.setMnemonicAt(0, KeyEvent.VK_4);
+		cloudTabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 		
+		
+		
+	    
 		add(cloudTabbedPane);
-		
+		setPreferredSize(fullLoginScreenSize);
 		cloudTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
 //		Image dbxImg = Toolkit.getDefaultToolkit().getImage("img/DropboxIconWithName.png");
@@ -114,14 +127,16 @@ public class login extends JPanel {
         filler.setHorizontalAlignment(JLabel.CENTER);
         panel.setLayout(new GridLayout(1, 1));
         panel.add(filler);
+        panel.setPreferredSize(new Dimension(100,100));
         return panel;
     }
 
 	/** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
+    protected static ImageIcon createImageIcon(String path, Dimension size) {
     	Image img = Toolkit.getDefaultToolkit().getImage(path);
-        if (img != null) {
-            return new ImageIcon(img);
+    	Image resizedImage = img.getScaledInstance(size.width, size.height, java.awt.Image.SCALE_REPLICATE);
+        if (resizedImage != null) {
+            return new ImageIcon(resizedImage);
         } else {
             System.err.println("Couldn't find file: " + path);
             return null;
