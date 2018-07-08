@@ -1,4 +1,4 @@
-package login;
+package home;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
