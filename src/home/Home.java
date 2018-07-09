@@ -1,93 +1,46 @@
 package home;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 public class Home extends JPanel {
 	//private variables
-	private JTabbedPane cloudTabbedPane;
-	private JButton connectToDbx;
-	private JButton connectToGgl;
-	private JButton connectToOneD;
-	private static JPanel copyRightPanel;
+	private static JTabbedPane cloudTabbedPane;
 	public static Dimension fullLoginScreenSize;
-	private Dimension tabSize;
-	private int numTabs;
+	public static Dimension tabSize;
+	private static int numTabs;
 	// Constructor to setup the GUI components
 	public Home() {
 		super(new GridLayout(1,1));
-		numTabs = 5;
 		
+		numTabs = 0;
+		System.out.println(numTabs);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		fullLoginScreenSize = new Dimension(screenSize.width/2, screenSize.height/2);
-		tabSize = new Dimension((fullLoginScreenSize.width-130)/numTabs, 35);
+		tabSize = new Dimension(100, 28);
 		cloudTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 
 		cloudTabbedPane.setUI(new BasicTabbedPaneUI());
 
 		JComponent allPane = makeTextPanel("All panel");
-		ImageIcon allPaneIcon = createImageIcon("./img/Cloudeer.png", tabSize);
 		cloudTabbedPane.addTab("", allPane);
 	    JLabel allPaneTitle = new JLabel("All");    // create a label
 	    allPaneTitle.setHorizontalAlignment(JLabel.CENTER);
 	    allPaneTitle.setPreferredSize(tabSize);
 		cloudTabbedPane.setTabComponentAt(0, allPaneTitle);
-		cloudTabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
-		
-		JComponent dbxPane = makeTextPanel("Dropbox panel");
-		ImageIcon dbxPaneIcon = createImageIcon("img/600DropboxIconWithName.png", tabSize);
-		cloudTabbedPane.addTab("", dbxPane);
-		JLabel dbxPaneTitle = new JLabel();
-		dbxPaneTitle.setHorizontalAlignment(JLabel.CENTER);
-
-		dbxPaneTitle.setIcon(dbxPaneIcon);
-		dbxPaneTitle.setPreferredSize(tabSize);
-		cloudTabbedPane.setTabComponentAt(1, dbxPaneTitle);
-		cloudTabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-		
-		JComponent gglPane = makeTextPanel("Google panel");
-		ImageIcon gglPaneIcon = createImageIcon("img/600GoogleDriveIconWithName.png", tabSize);
-		cloudTabbedPane.addTab("", gglPane);
-		JLabel gglPaneTitle = new JLabel();
-		gglPaneTitle.setHorizontalAlignment(JLabel.CENTER);
-
-		gglPaneTitle.setIcon(gglPaneIcon);
-		gglPaneTitle.setPreferredSize(tabSize);
-		cloudTabbedPane.setTabComponentAt(2, gglPaneTitle);
-		cloudTabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-		
-		JComponent oneDrivePane = makeTextPanel("One Drive panel");
-		ImageIcon OneDrivePaneIcon = createImageIcon("img/600OneDriveWithName.png", tabSize);
-		cloudTabbedPane.addTab("", oneDrivePane);
-		JLabel oneDrivePaneTitle = new JLabel();
-		oneDrivePaneTitle.setHorizontalAlignment(JLabel.CENTER);
-
-		oneDrivePaneTitle.setIcon(OneDrivePaneIcon);
-		oneDrivePaneTitle.setPreferredSize(tabSize);
-		cloudTabbedPane.setTabComponentAt(3, oneDrivePaneTitle);
-		cloudTabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
+		numTabs++;
 		
 		JComponent plusPane = makeTextPanel("Plus panel");
 		cloudTabbedPane.addTab("", plusPane);
 	    JLabel plusPaneTitle = new JLabel("+");    // create a label
 	    plusPaneTitle.setHorizontalAlignment(JLabel.CENTER);
-
+	    plusPaneTitle.addMouseListener(new AddTabMouseAdapter());
 	    plusPaneTitle.setPreferredSize(tabSize);
-		cloudTabbedPane.setTabComponentAt(4, plusPaneTitle);
-		cloudTabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
-		
-	    
+		cloudTabbedPane.setTabComponentAt(1, plusPaneTitle);
+		numTabs++;
+
 		add(cloudTabbedPane);
-//		setPreferredSize(new Dimension(fullLoginScreenSize.width, fullLoginScreenSize.height * 9 / 10));
 		cloudTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
 //		Image dbxImg = Toolkit.getDefaultToolkit().getImage("img/DropboxIconWithName.png");
@@ -145,7 +98,29 @@ public class Home extends JPanel {
 //		
 //	}
 	
-	protected JComponent makeTextPanel(String text) {
+	public static void addTab(JComponent body, ImageIcon icon) {
+		System.out.println(numTabs);
+
+		cloudTabbedPane.insertTab("", icon, body, "", numTabs-1);
+		JLabel title = new JLabel();
+		title.setHorizontalAlignment(JLabel.CENTER);
+		title.setIcon(icon);
+		title.setPreferredSize(tabSize);
+		cloudTabbedPane.setTabComponentAt(numTabs-1, title);
+
+		numTabs++;
+	}
+	
+	public static void resize() {
+		
+	}
+	
+	/**
+	 * Helper function making text panel
+	 * @param text
+	 * @return
+	 */
+	public static JComponent makeTextPanel(String text) {
         JPanel panel = new JPanel(false);
         JLabel filler = new JLabel(text);
         filler.setHorizontalAlignment(JLabel.CENTER);
@@ -155,7 +130,12 @@ public class Home extends JPanel {
         return panel;
     }
 
-	/** Returns an ImageIcon, or null if the path was invalid. */
+	/**
+	 * Helper function creating image icon
+	 * @param path path to that image
+	 * @param size size of the image
+	 * @return
+	 */
     protected static ImageIcon createImageIcon(String path, Dimension size) {
     	Image img = Toolkit.getDefaultToolkit().getImage(path);
     	Image resizedImage = img.getScaledInstance(size.width-20, size.height-10, java.awt.Image.SCALE_REPLICATE);
