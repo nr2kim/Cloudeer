@@ -1,5 +1,7 @@
 package home;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -7,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import com.dropbox.core.json.JsonReader.FileLoadException;
@@ -16,21 +20,9 @@ import DbxLogin.SignInDbx;
 public class connectButtonMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
 	JButton thisButton;
-	private JComponent dropboxBody;
-	private JComponent googleDriveBody;
-	private JComponent oneDriveBody;
-	private ImageIcon dropboxIcon;
-	private ImageIcon googleDriveIcon;
-	private ImageIcon oneDriveIcon;
+
 	public connectButtonMouseAdapter(JButton connectButton) {
 		thisButton = connectButton;
-
-		dropboxBody = Home.makeTextPanel("Dropbox panel");
-		dropboxIcon = Home.createImageIcon("img/600DropboxIconWithName.png", Home.tabSize);
-		googleDriveBody = Home.makeTextPanel("Google panel");
-		googleDriveIcon = Home.createImageIcon("img/600GoogleDriveIconWithName.png", Home.tabSize);
-		oneDriveBody = Home.makeTextPanel("One Drive panel");
-		oneDriveIcon = Home.createImageIcon("img/600OneDriveWithName.png", Home.tabSize);
 	}
 	
 	@Override
@@ -74,6 +66,8 @@ public class connectButtonMouseAdapter extends MouseAdapter {
     	JFrame signInFrame;
     	switch (thisButton.getName()) {
 		case "DbxSignInButton":
+			JComponent dropboxBody = makeTextPanel("Dropbox panel");
+			ImageIcon dropboxIcon = Home.createImageIcon("img/600DropboxIconWithName.png", Home.tabSize);
 			Home.addTab(dropboxBody, dropboxIcon);
 			signInFrame = new SignInDbx();
 	        signInFrame.setLocationRelativeTo(null);
@@ -81,13 +75,32 @@ public class connectButtonMouseAdapter extends MouseAdapter {
 	        signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			break;
 		case "GglSignInButton":
+			JComponent googleDriveBody = makeTextPanel("Google panel");
+			ImageIcon googleDriveIcon = Home.createImageIcon("img/600GoogleDriveIconWithName.png", Home.tabSize);
 			Home.addTab(googleDriveBody, googleDriveIcon);
 			break;
 		case "OneDriveSignInButton":
+			JComponent oneDriveBody = makeTextPanel("One Drive panel");;
+			ImageIcon oneDriveIcon = Home.createImageIcon("img/600OneDriveWithName.png", Home.tabSize);
 			Home.addTab(oneDriveBody, oneDriveIcon);
+			
 			break;
 		default:
 			break;
 		}
+    }
+    /**
+	 * Helper function making text panel
+	 * @param text
+	 * @return
+	 */
+	public JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        panel.setPreferredSize(new Dimension(100,100));
+        return panel;
     }
 }
