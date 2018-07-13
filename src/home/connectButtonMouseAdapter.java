@@ -1,4 +1,4 @@
-package home;
+package Home;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -43,7 +43,6 @@ public class connectButtonMouseAdapter extends MouseAdapter {
             	try {
 					addTabSetup();
 				} catch (FileLoadException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
             }

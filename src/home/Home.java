@@ -1,10 +1,12 @@
-package home;
+package Home;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 public class Home extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3269305306013516872L;
 	//private variables
 	private static JTabbedPane cloudTabbedPane;
 	public static Dimension tabSize;
@@ -12,13 +14,13 @@ public class Home extends JPanel {
 	// Constructor to setup the GUI components
 	public Home() {
 		super(new GridLayout(1,0));
+//		UIManager.put("cloudTabbedPane.unselectedTabBackground", Color.decode("#B6F4FF"));
 		
 		numTabs = 0;
 		tabSize = new Dimension(100, 28);
 		cloudTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		cloudTabbedPane.setAutoscrolls(true);
 
-		cloudTabbedPane.setUI(new BasicTabbedPaneUI());
 
 		JComponent allPane = makeTextPanel("All panel");
 		cloudTabbedPane.addTab("", allPane);
@@ -38,7 +40,9 @@ public class Home extends JPanel {
 		numTabs++;
 
 		add(cloudTabbedPane);
-		cloudTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+		cloudTabbedPane.setTabLayoutPolicy(JTabbedPane.WRAP_TAB_LAYOUT);
+        setBackground(Color.WHITE);
+
 	}
 	
 	public static void addTab(JComponent body, ImageIcon icon) {
@@ -58,10 +62,11 @@ public class Home extends JPanel {
 //		}
 	}
 	
-	public static void resize() {
-		tabSize = new Dimension((Frame.fullLoginScreenSize.width-20)/numTabs, 28);
+	@Override
+	public void resize(Dimension screenSize) {
+		tabSize = new Dimension((screenSize.width-20)/numTabs, 28);
 		for(int i = 0; i < numTabs; i++) {
-			cloudTabbedPane.getComponentAt(i).setPreferredSize(tabSize);
+			// System.out.println(cloudTabbedPane.getIconAt(i));
 		}
 	}
 	

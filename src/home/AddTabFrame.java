@@ -1,7 +1,7 @@
 /**
  * Example from https://github.com/dropbox/dropbox-sdk-java
  */
-package home;
+package Home;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -10,6 +10,11 @@ import java.awt.Toolkit;
 import java.awt.Dimension;
 
 public class AddTabFrame extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -376770814429213091L;
+
 	public AddTabFrame() {
 		super("Sign In");
 		JPanel addTabFramePanel = new JPanel();

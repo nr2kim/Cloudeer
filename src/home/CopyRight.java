@@ -1,4 +1,4 @@
-package home;
+package Home;
 
 import java.awt.Color;
 
@@ -6,6 +6,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class CopyRight extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4969533712747204047L;
+
 	public CopyRight() {
 		super();
 		setBackground(Color.BLACK);

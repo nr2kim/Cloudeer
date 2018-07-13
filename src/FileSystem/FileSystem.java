@@ -1,16 +1,9 @@
 package FileSystem;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import javax.swing.JFrame;
 
-import com.dropbox.core.v2.DbxClientV2;
-import com.dropbox.core.v2.files.FileMetadata;
-import com.dropbox.core.v2.files.ListFolderResult;
-import com.dropbox.core.v2.files.Metadata;
-import com.dropbox.core.v2.users.FullAccount;
-
 public class FileSystem extends JFrame {
+	private static final long serialVersionUID = -4141131976143917767L;
+
 	public static void onAuthenticated() {
 //		DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 //

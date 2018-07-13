@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -15,9 +14,6 @@ import com.dropbox.core.DbxAuthFinish;
 import com.dropbox.core.DbxAuthInfo;
 import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxWebAuth;
-import com.dropbox.core.json.JsonReader.FileLoadException;
-import com.dropbox.core.DbxRequestConfig;
-import com.dropbox.core.v2.DbxClientV2;
 
 public class DbxConnectButtonMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
