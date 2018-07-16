@@ -10,7 +10,9 @@ import com.dropbox.core.json.JsonReader.FileLoadException;
 
 public class AddTabMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
-	public AddTabMouseAdapter() {
+	private Home home;
+	public AddTabMouseAdapter(Home home) {
+		this.home = home;
 	}
 	
 	@Override
@@ -37,7 +39,7 @@ public class AddTabMouseAdapter extends MouseAdapter {
     }
     
     public void signInFrameSetup() throws FileLoadException {
-    	JFrame addTabFrame = new AddTabFrame();
-    	addTabFrame.setVisible(true);
+    	JFrame signInFrame = new SignInFrame(home);
+    	signInFrame.setVisible(true);
     }
 }

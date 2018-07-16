@@ -7,7 +7,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -20,7 +19,7 @@ public class Frame extends JFrame {
 	 */
 	private static final long serialVersionUID = 8589198899364182488L;
 	public static Dimension fullLoginScreenSize;
-	private JPanel home;
+	private Home home;
 	public Frame() {
 		super("Cloudeer");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -38,7 +37,6 @@ public class Frame extends JFrame {
         setVisible(true);
         
         addComponentListener(new ComponentListener() {
-			@SuppressWarnings("deprecation")
 			@Override
 			public void componentResized(ComponentEvent e) {
 				fullLoginScreenSize = e.getComponent().getSize();
