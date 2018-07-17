@@ -61,7 +61,7 @@ public class SignInDbx extends JFrame {
 		Object parsedAppInfo = null;
 		try {
 			parsedConfig = parser.parse(new FileReader("./src/dbx.cloudeer.config"));
-			parsedAppInfo = parser.parse(new FileReader("./src/auth.env"));
+			parsedAppInfo = parser.parse(new FileReader("./src/dbx.auth.env"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
