@@ -1,0 +1,10 @@
+# Output file
+out/
+build/
+bin/
+
+.vscode/
+.project
+.classpath
+src/*.env
+
