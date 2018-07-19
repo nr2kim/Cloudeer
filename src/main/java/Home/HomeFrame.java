@@ -25,8 +25,8 @@ public class HomeFrame extends JFrame {
 		fullLoginScreenSize = new Dimension(screenSize.width/2, screenSize.height/2);
 
 		home = new HomePanel();
-		add(home, BorderLayout.CENTER);
-        add(new CopyRight(), BorderLayout.PAGE_END);
+		getContentPane().add(home, BorderLayout.CENTER);
+		getContentPane().add(new CopyRight(), BorderLayout.PAGE_END);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
