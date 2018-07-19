@@ -16,7 +16,7 @@ public class SignInFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -376770814429213091L;
 
-	public SignInFrame(Home home) {
+	public SignInFrame(HomePanel home) {
 		super("Sign In");
 		JPanel addTabFramePanel = new JPanel();
 		addTabFramePanel.setLayout(new BoxLayout(addTabFramePanel, BoxLayout.Y_AXIS));

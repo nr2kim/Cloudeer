@@ -2,7 +2,9 @@ package Home;
 import java.awt.*;
 import javax.swing.*;
 
-public class Home extends JPanel {
+import Util.Util;
+
+public class HomePanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -12,7 +14,7 @@ public class Home extends JPanel {
 	public Dimension tabSize;
 	private int numTabs;
 	// Constructor to setup the GUI components
-	public Home() {
+	public HomePanel() {
 		super(new GridLayout(1,0));
 //		UIManager.put("cloudTabbedPane.unselectedTabBackground", Color.decode("#B6F4FF"));
 		
@@ -57,7 +59,7 @@ public class Home extends JPanel {
 
 		numTabs++;
 
-		this.resize(Frame.fullLoginScreenSize);
+		this.resize(HomeFrame.fullLoginScreenSize);
 	}
 	
 	@Override

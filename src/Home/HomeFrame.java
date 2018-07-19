@@ -11,21 +11,21 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import Home.Home;
+import Home.HomePanel;
 
-public class Frame extends JFrame {
+public class HomeFrame extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8589198899364182488L;
 	public static Dimension fullLoginScreenSize;
-	private Home home;
-	public Frame() {
+	private HomePanel home;
+	public HomeFrame() {
 		super("Cloudeer");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		fullLoginScreenSize = new Dimension(screenSize.width/2, screenSize.height/2);
 
-		home = new Home();
+		home = new HomePanel();
 		add(home, BorderLayout.CENTER);
         add(new CopyRight(), BorderLayout.PAGE_END);
         
@@ -75,7 +75,7 @@ public class Frame extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-            	new Frame();
+            	new HomeFrame();
             }
         });
     }

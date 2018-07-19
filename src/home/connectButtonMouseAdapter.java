@@ -12,13 +12,14 @@ import javax.swing.SwingUtilities;
 import com.dropbox.core.json.JsonReader.FileLoadException;
 
 import DbxLogin.SignInDbx;
+import Util.Util;
 
 public class connectButtonMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
 	JButton thisButton;
-	Home home;
+	HomePanel home;
 
-	public connectButtonMouseAdapter(Home home, JButton connectButton) {
+	public connectButtonMouseAdapter(HomePanel home, JButton connectButton) {
 		thisButton = connectButton;
 		this.home = home;
 	}

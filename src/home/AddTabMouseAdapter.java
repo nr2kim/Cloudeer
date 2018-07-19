@@ -10,8 +10,8 @@ import com.dropbox.core.json.JsonReader.FileLoadException;
 
 public class AddTabMouseAdapter extends MouseAdapter {
 	boolean pressed = false;
-	private Home home;
-	public AddTabMouseAdapter(Home home) {
+	private HomePanel home;
+	public AddTabMouseAdapter(HomePanel home) {
 		this.home = home;
 	}
 	
