@@ -1,14 +1,10 @@
 package Util;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -16,9 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import Home.HomeFrame;
@@ -32,7 +26,11 @@ public class Util {
 	public static JComponent makeTextPanel(String text) {
         JPanel panel = new JPanel(new BorderLayout());
         TableModel tableModel = new AbstractTableModel() {
-        	private String headers[] = {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5833244915186107505L;
+			private String headers[] = {
         			"Name", "Size", "Type"
         	};
         	public int getColumnCount() { return 3; }

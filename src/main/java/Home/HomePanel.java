@@ -1,7 +1,13 @@
 package Home;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 
+import com.dropbox.core.json.JsonReader.FileLoadException;
+
+import SignIn.SignInFrame;
 import Util.Util;
 
 public class HomePanel extends JPanel {
@@ -36,7 +42,28 @@ public class HomePanel extends JPanel {
 		cloudTabbedPane.addTab("", plusPane);
 	    JLabel plusPaneTitle = new JLabel("+");    // create a label
 	    plusPaneTitle.setHorizontalAlignment(JLabel.CENTER);
-	    plusPaneTitle.addMouseListener(new HomeAddTabMouseAdapter(this));
+	    plusPaneTitle.addMouseListener(new MouseAdapter() {
+    		boolean pressed = false;
+
+    		@Override
+    	    public void mousePressed(MouseEvent e) {
+    	        pressed = true;
+    	    }
+
+    	    @Override
+    	    public void mouseReleased(MouseEvent e) {
+    	        if (pressed && SwingUtilities.isLeftMouseButton(e)) {
+					try {
+						signInFrameSetup();
+					} catch (FileLoadException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+    	        }
+    	        pressed = false;
+    	    }
+	    });
+
 	    plusPaneTitle.setPreferredSize(tabSize);
 		cloudTabbedPane.setTabComponentAt(1, plusPaneTitle);
 		numTabs++;
@@ -46,7 +73,12 @@ public class HomePanel extends JPanel {
         setBackground(Color.WHITE);
 
 	}
-	
+
+	public void signInFrameSetup() throws FileLoadException {
+    	JFrame signInFrame = new SignInFrame(this);
+    	signInFrame.setVisible(true);
+    }
+
 	public void addTab(JComponent body, ImageIcon icon) {
 		cloudTabbedPane.insertTab("", icon, body, "", numTabs-1);
 

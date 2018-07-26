@@ -14,27 +14,24 @@ apply plugin: 'application'
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    mavenCentral()
-    mavenLocal()
+    jcenter()    
 }
 
 dependencies {
 	compile 'com.dropbox.core:dropbox-core-sdk:3.0.8'
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
-
 	// UI Libs
-    compile 'com.jfoenix:jfoenix:8.0.5' // Java 8
-	compile 'de.jensd:fontawesomefx-emojione:2.2.7-2'
-    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
-    compile 'de.jensd:fontawesomefx-icons525:3.0.0-4'
-    compile 'de.jensd:fontawesomefx-materialdesignfont:1.7.22-4'
-    compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
-    compile 'de.jensd:fontawesomefx-octicons:4.3.0-5'
-    compile 'de.jensd:fontawesomefx-weathericons:2.0.10-5'
-    compile 'de.jensd:fontawesomefx-controls:8.15'
-    compile 'org.controlsfx:controlsfx:8.40.11'
+    // compile 'com.jfoenix:jfoenix:8.0.5' // Java 8
+	// compile 'de.jensd:fontawesomefx-emojione:2.2.7-2'
+    // compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
+    // compile 'de.jensd:fontawesomefx-icons525:3.0.0-4'
+    // compile 'de.jensd:fontawesomefx-materialdesignfont:1.7.22-4'
+    // compile 'de.jensd:fontawesomefx-materialicons:2.2.0-5'
+    // compile 'de.jensd:fontawesomefx-octicons:4.3.0-5'
+    // compile 'de.jensd:fontawesomefx-weathericons:2.0.10-5'
+    // compile 'de.jensd:fontawesomefx-controls:8.15'
+    // compile 'org.controlsfx:controlsfx:8.40.11'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'

@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 public class OperationDropbox extends JFrame {
 	private static final long serialVersionUID = -4141131976143917767L;
 
-	public static void onAuthenticated() {
+//	public static void onAuthenticated() {
 //		DbxClientV2 client = new DbxClientV2(config, ACCESS_TOKEN);
 //
 //        // Get current account info
@@ -30,5 +30,5 @@ public class OperationDropbox extends JFrame {
 //            FileMetadata metadata = client.files().uploadBuilder("/test.txt")
 //                .uploadAndFinish(in);
 //        }
-	}	
+//	}	
 }

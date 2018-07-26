@@ -2,6 +2,7 @@ package SignIn;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -67,10 +68,16 @@ public class SignInButtonMouseAdapter extends MouseAdapter {
 			JComponent dropboxBody = Util.makeTextPanel("Dropbox panel");
 			ImageIcon dropboxIcon = Util.createImageIcon("img/600DropboxIconWithName.png", home.tabSize);
 			home.addTab(dropboxBody, dropboxIcon);
-			signInFrame = new SignInDropbox();
-	        signInFrame.setLocationRelativeTo(null);
-	        signInFrame.setVisible(true);
-	        signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			try {
+				signInFrame = new dropboxSigninTest();
+				signInFrame.setLocationRelativeTo(null);
+		        signInFrame.setVisible(true);
+		        signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
 			break;
 		case "GglSignInButton":
 			JComponent googleDriveBody = Util.makeTextPanel("Google panel");
