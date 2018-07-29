@@ -15,7 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import Home.HomeFrame;
+import Home.HomeSetup;
 
 public class Util {
 	/**
@@ -43,14 +43,14 @@ public class Util {
 
         JTable table = new JTable(tableModel);
         
-        table.getColumnModel().getColumn(0).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.6));
-        table.getColumnModel().getColumn(1).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.2));
-        table.getColumnModel().getColumn(2).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.2));
+        table.getColumnModel().getColumn(0).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.6));
+        table.getColumnModel().getColumn(1).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.2));
+        table.getColumnModel().getColumn(2).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.2));
         table.getColumnModel().getColumn(0).setMinWidth(50);
         table.getColumnModel().getColumn(1).setMinWidth(50);
         table.getColumnModel().getColumn(2).setMinWidth(50);
         
-        table.setRowHeight((int) ((HomeFrame.fullLoginScreenSize.height-102)/25));
+        table.setRowHeight((int) ((HomeSetup.homeFrameSize.height-102)/25));
 
         UIManager.put("JTable.showFrid", true);
         JScrollPane tableContainer = new JScrollPane(table);

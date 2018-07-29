@@ -91,7 +91,7 @@ public class HomePanel extends JPanel {
 
 		numTabs++;
 
-		this.resize(HomeFrame.fullLoginScreenSize);
+		// this.resize(HomeSetup.homeFrameSize);
 	}
 	
 	@Override

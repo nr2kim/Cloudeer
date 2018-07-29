@@ -4,6 +4,9 @@
 package SignIn;
 
 import com.dropbox.core.DbxAppInfo;
+import com.dropbox.core.DbxAuthFinish;
+import com.dropbox.core.DbxAuthInfo;
+import com.dropbox.core.DbxException;
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.DbxWebAuth;
 import com.dropbox.core.json.JsonReader.FileLoadException;
@@ -12,6 +15,9 @@ import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -48,8 +54,7 @@ public class SignInDropbox extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	@SuppressWarnings("deprecation")
-	public static void getAccessTokenSetUp() throws FileLoadException {
+	public void getAccessTokenSetUp() throws FileLoadException {
 		System.out.println("Working Directory = " +
 	              System.getProperty("user.dir"));
 		config = new DbxRequestConfig("Cloudeer/1.0.0", "en-CA");
@@ -71,7 +76,20 @@ public class SignInDropbox extends JFrame {
 
         accessInfo.setText("1. Go to " + authorizeUrl + "\n2. Click \"Allow\" (you might have to log in first)."
         		+ "\n3. Copy the authorization code.");
-		accessTokenCommit.addMouseListener(new AuthenticateDropboxMouseAdapter(accessTokenInput, accessTokenCommit, webAuth, appInfo));
+		accessTokenCommit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (SwingUtilities.isLeftMouseButton(e)) {
+					try {
+						finishDbxAuth();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+			
+		});
 
         GridBagConstraints constraints = new GridBagConstraints();
 		constraints.anchor = GridBagConstraints.WEST;
@@ -84,4 +102,34 @@ public class SignInDropbox extends JFrame {
 		constraints.insets = new Insets(20, 40, 40, 40);
         dbxPanel.add(accessTokenCommit, constraints);
 	}
+	
+	public void finishDbxAuth() throws IOException {
+		String token = new String(accessTokenInput.getText());
+        DbxAuthFinish authFinish;
+        try {
+            authFinish = webAuth.finishFromCode(token);
+        } catch (DbxException ex) {
+            System.err.println("Error in DbxWebAuth.authorize: " + ex.getMessage());
+            System.exit(1); return;
+        }
+
+        System.out.println("Authorization complete.");
+        System.out.println("- User ID: " + authFinish.getUserId());
+        System.out.println("- Account ID: " + authFinish.getAccountId());
+        System.out.println("- Access Token: " + authFinish.getAccessToken());
+
+        // Save auth information to output file.
+        DbxAuthInfo authInfo = new DbxAuthInfo(authFinish.getAccessToken(), appInfo.getHost());
+        File output = new File("./out/auth_output.txt");
+        try {
+            DbxAuthInfo.Writer.writeToFile(authInfo, output);
+            System.out.println("Saved authorization information to \"" + output.getCanonicalPath() + "\".");
+        } catch (IOException ex) {
+            System.err.println("Error saving to <auth-file-out>: " + ex.getMessage());
+            System.err.println("Dumping to stderr instead:");
+            DbxAuthInfo.Writer.writeToStream(authInfo, System.err);
+            System.exit(1); return;
+        }
+
+    }
 }

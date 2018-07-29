@@ -3,10 +3,8 @@
  */
 import org.junit.Test;
 
-import Home.HomeFrame;
 
 public class LibraryTest {
     @Test public void testSomeLibraryMethod() {
-        HomeFrame classUnderTest = new HomeFrame();
     }
 }

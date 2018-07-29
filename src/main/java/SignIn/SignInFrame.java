@@ -2,13 +2,16 @@ package SignIn;
 
 import javax.swing.*;
 
+import com.dropbox.core.json.JsonReader.FileLoadException;
+
 import Home.HomePanel;
+import Util.Util;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class SignInFrame extends JFrame {
 	/**
@@ -21,9 +24,9 @@ public class SignInFrame extends JFrame {
 		JPanel addTabFramePanel = new JPanel();
 		addTabFramePanel.setLayout(new BoxLayout(addTabFramePanel, BoxLayout.Y_AXIS));
 
-		ImageIcon dbxImg = createImageIcon("img/600DropboxIconWithName.png", home.tabSize);
-		ImageIcon gglImg = createImageIcon("img/600GoogleDriveIconWithName.png", home.tabSize);
-		ImageIcon oneDriveIcon = createImageIcon("img/600OneDriveWithName.png", home.tabSize);
+		ImageIcon dbxImg = Util.createImageIcon("img/600DropboxIconWithName.png", home.tabSize);
+		ImageIcon gglImg = Util.createImageIcon("img/600GoogleDriveIconWithName.png", home.tabSize);
+		ImageIcon oneDriveIcon = Util.createImageIcon("img/600OneDriveWithName.png", home.tabSize);
 		Insets inset = new Insets(10, 30, 10, 30);
 		JButton connectToDbx = new JButton();
 		connectToDbx.setMargin(inset);
@@ -49,9 +52,43 @@ public class SignInFrame extends JFrame {
 		connectToOneDrive.setIcon(oneDriveIcon);
 		connectToOneDrive.setName("OneDriveSignInButton");
 		
-		connectToDbx.addMouseListener(new SignInButtonMouseAdapter(home, connectToDbx));
-		connectToGgl.addMouseListener(new SignInButtonMouseAdapter(home, connectToGgl));
-		connectToOneDrive.addMouseListener(new SignInButtonMouseAdapter(home, connectToOneDrive));
+		connectToDbx.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JComponent dropboxBody = Util.makeTextPanel("Dropbox panel");
+				ImageIcon dropboxIcon = Util.createImageIcon("img/600DropboxIconWithName.png", home.tabSize);
+				home.addTab(dropboxBody, dropboxIcon);
+				JFrame signInFrame;
+				try {
+					signInFrame = new SignInDropbox();
+					signInFrame.setLocationRelativeTo(null);
+					signInFrame.setVisible(true);
+					signInFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (FileLoadException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+
+		connectToGgl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JComponent googleDriveBody = Util.makeTextPanel("Google panel");
+				ImageIcon googleDriveIcon = Util.createImageIcon("img/600GoogleDriveIconWithName.png", home.tabSize);
+				home.addTab(googleDriveBody, googleDriveIcon);
+			}
+		});
+
+		connectToOneDrive.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JComponent oneDriveBody = Util.makeTextPanel("One Drive panel");;
+				ImageIcon oneDriveIcon = Util.createImageIcon("img/600OneDriveWithName.png", home.tabSize);
+				home.addTab(oneDriveBody, oneDriveIcon);
+			}
+		});
+
 
 		addTabFramePanel.add(connectToDbx);
 		addTabFramePanel.add(connectToGgl);
@@ -66,18 +103,4 @@ public class SignInFrame extends JFrame {
 		// put this for now, later, put it as JFrame.HIDE_ON_CLOSE
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	/** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path, Dimension size) {
-    	Image img = Toolkit.getDefaultToolkit().getImage(path);
-    	Image resizedImage = img.getScaledInstance(size.width-20, size.height-10, java.awt.Image.SCALE_REPLICATE);
-        if (resizedImage != null) {
-            return new ImageIcon(resizedImage);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
-    }
-
-
 }
