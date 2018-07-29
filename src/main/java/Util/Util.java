@@ -1,14 +1,10 @@
 package Util;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -16,12 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
-import Home.HomeFrame;
+import Home.HomeSetup;
 
 public class Util {
 	/**
@@ -32,7 +26,11 @@ public class Util {
 	public static JComponent makeTextPanel(String text) {
         JPanel panel = new JPanel(new BorderLayout());
         TableModel tableModel = new AbstractTableModel() {
-        	private String headers[] = {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 5833244915186107505L;
+			private String headers[] = {
         			"Name", "Size", "Type"
         	};
         	public int getColumnCount() { return 3; }
@@ -45,14 +43,14 @@ public class Util {
 
         JTable table = new JTable(tableModel);
         
-        table.getColumnModel().getColumn(0).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.6));
-        table.getColumnModel().getColumn(1).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.2));
-        table.getColumnModel().getColumn(2).setPreferredWidth((int) (HomeFrame.fullLoginScreenSize.width * 0.2));
+        table.getColumnModel().getColumn(0).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.6));
+        table.getColumnModel().getColumn(1).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.2));
+        table.getColumnModel().getColumn(2).setPreferredWidth((int) (HomeSetup.homeFrameSize.width * 0.2));
         table.getColumnModel().getColumn(0).setMinWidth(50);
         table.getColumnModel().getColumn(1).setMinWidth(50);
         table.getColumnModel().getColumn(2).setMinWidth(50);
         
-        table.setRowHeight((int) ((HomeFrame.fullLoginScreenSize.height-102)/25));
+        table.setRowHeight((int) ((HomeSetup.homeFrameSize.height-102)/25));
 
         UIManager.put("JTable.showFrid", true);
         JScrollPane tableContainer = new JScrollPane(table);
